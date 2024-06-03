@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -8,8 +6,7 @@ public class Player : MonoBehaviour
     private float _moveSpeed = 5; [SerializeField]
     private float _rotateSpeed = 10;
 
-    private bool isWalking;
-    // Update is called once per frame
+    private bool _isWalking;
     void Update()
     {
         Vector2 inputVector = new Vector2(0, 0);
@@ -32,14 +29,14 @@ public class Player : MonoBehaviour
 
         inputVector = inputVector.normalized;
         Vector3 moveDir =  new Vector3(inputVector.x, 0f, inputVector.y);
-        isWalking = moveDir != Vector3.zero;
+        _isWalking = moveDir != Vector3.zero;
         transform.forward = Vector3.Slerp(transform.forward,moveDir * _rotateSpeed,Time.deltaTime*_rotateSpeed) ;
-        var step = moveDir * Time.deltaTime * _moveSpeed;
+        var step = moveDir * (Time.deltaTime * _moveSpeed);
         transform.position += step;
     }
 
     public bool IsWalking()
     {
-        return isWalking;
+        return _isWalking;
     }
 }
